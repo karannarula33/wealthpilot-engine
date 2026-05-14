@@ -108,7 +108,7 @@ export class PortfolioService {
       ctx += `|--------|-----|----------|-----|-----------|-------|--------|-------|\n`;
 
       for (const h of portfolio.holdings) {
-        ctx += `| ${h.symbol || h.name} | ${h.quantity} | ${h.avg_cost_price?.toFixed(2)} | ${h.current_price?.toFixed(2) || '-'} | ${this.formatLakhs(h.current_value)} | ${h.unrealized_pnl_pct?.toFixed(1) || '0'}% | ${h.sector || '-'} | ${h.asset_class} |\n`;
+        ctx += `| ${h.symbol || h.name} | ${h.quantity} | ${h.avgCostPrice?.toFixed(2)} | ${h.currentPrice?.toFixed(2) || '-'} | ${this.formatLakhs(h.currentValue)} | ${h.unrealizedPnlPct?.toFixed(1) || '0'}% | ${h.sector || '-'} | ${h.assetClass} |\n`;
       }
 
       ctx += `\n### Allocation\n`;
@@ -168,8 +168,8 @@ export class PortfolioService {
     const allocationByAssetClass: Record<string, number> = {};
     const allocationBySector: Record<string, number> = {};
     for (const h of allHoldings) {
-      const pct = totalValue > 0 ? ((h.current_value || 0) / totalValue) * 100 : 0;
-      allocationByAssetClass[h.asset_class] = (allocationByAssetClass[h.asset_class] || 0) + pct;
+      const pct = totalValue > 0 ? ((h.currentValue || 0) / totalValue) * 100 : 0;
+      allocationByAssetClass[h.assetClass] = (allocationByAssetClass[h.assetClass] || 0) + pct;
       if (h.sector) {
         allocationBySector[h.sector] = (allocationBySector[h.sector] || 0) + pct;
       }
