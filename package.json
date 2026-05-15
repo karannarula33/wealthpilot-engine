@@ -1,8 +1,11 @@
 {
   "name": "wealthpilot",
   "version": "1.0.0",
+  "engines": {
+    "node": "20.x",
   "description": "Personal AI wealth advisor with WhatsApp alerts",
-  "main": "dist/index.js",
+  "main": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "tsx src/index.ts",
