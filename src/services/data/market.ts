@@ -1,3 +1,5 @@
+import defaultYahooFinance from 'yahoo-finance2';
+const yahooFinance = defaultYahooFinance as any;
 import { logger } from '../../utils/logger';
 import { db } from '../../db/client';
 
@@ -63,12 +65,8 @@ export class MarketDataService {
     vix: number;
   }> {
     try {
-      // Dynamic import to handle potential module issues
-      const yahooFinance = await import('yahoo-finance2');
-      const yf = yahooFinance.default;
-
-      const nifty = await yf.quote('^NSEI');
-      const vix = await yf.quote('^INDIAVIX');
+      const nifty = await yahooFinance.quote('^NSEI');
+      const vix = await yahooFinance.quote('^INDIAVIX');
 
       return {
         price: nifty.regularMarketPrice || 0,
@@ -93,15 +91,12 @@ export class MarketDataService {
     crudeOil: number;
   }> {
     try {
-      const yahooFinance = await import('yahoo-finance2');
-      const yf = yahooFinance.default;
-
       const [sp500, nasdaq, usdInr, gold, crude] = await Promise.allSettled([
-        yf.quote('^GSPC'),
-        yf.quote('^IXIC'),
-        yf.quote('INR=X'),
-        yf.quote('GC=F'),
-        yf.quote('CL=F'),
+        yahooFinance.quote('^GSPC'),
+        yahooFinance.quote('^IXIC'),
+        yahooFinance.quote('INR=X'),
+        yahooFinance.quote('GC=F'),
+        yahooFinance.quote('CL=F'),
       ]);
 
       const getVal = (r: PromiseSettledResult<any>, field: string) =>
