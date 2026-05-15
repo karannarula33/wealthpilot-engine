@@ -304,13 +304,16 @@ async function getDefaultUserId(): Promise<string> {
 }
 
 async function main() {
-  logger.info('WealthPilot starting...', { env: config.env, port: config.port });
+  // RAILWAY FIX: Force the app to use Railway's dynamic port if it exists
+  const port = process.env.PORT || config.port || 3000;
+
+  logger.info('WealthPilot starting...', { env: config.env, port });
 
   // Start Express server
-  app.listen(config.port, () => {
-    logger.info(`Server running on port ${config.port}`);
+  app.listen(port, () => {
+    logger.info(`Server running on port ${port}`);
     logger.info(`WhatsApp webhook: ${config.webhookBaseUrl}/api/webhook/whatsapp`);
-    logger.info(`Zerodha login: http://localhost:${config.port}/api/auth/zerodha/login?user_id=YOUR_USER_ID`);
+    logger.info(`Zerodha login: http://localhost:${port}/api/auth/zerodha/login?user_id=YOUR_USER_ID`);
   });
 
   // Start scheduler
