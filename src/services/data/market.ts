@@ -1,5 +1,4 @@
-import defaultYahooFinance from 'yahoo-finance2';
-const yahooFinance = defaultYahooFinance as any;
+const yahooFinance = require('yahoo-finance2').default;
 import { logger } from '../../utils/logger';
 import { db } from '../../db/client';
 
